@@ -1,0 +1,176 @@
+openapi: 3.1.0
+info:
+  title: Central Service For Handling User Regions
+  description: |-
+    This service syncs the user accounts to the central service to route to the user's respective home region.
+  version: 1.0.0
+servers:
+  - url: https://petstore3.swagger.io/api/v3
+tags:
+  - name: events
+    description: Publish user operation events
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: user
+    description: Operations about user
+paths:
+  /events:
+    post:
+      tags:
+        - events
+      summary: Add a new pet to the store
+      description: Add a new pet to the store
+      operationId: receiveEvent
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+        required: true
+      responses:
+        '202':
+          description: Successful operation
+        '405':
+          description: Bad Request
+      security:
+        - petstore_auth:
+            - write:pets
+            - read:pets
+  /users:
+    get:
+      tags:
+        - user
+      operationId: findRegionByLoginIdentifier
+      parameters:
+        - name: identifier
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/FilterResponse'
+        '400':
+          description: Invalid filter value
+components:
+  schemas:
+    Event:
+      required:
+        - jti
+        - iat
+        - iss
+        - sub_id
+        - events
+      type: object
+      properties:
+        jti:
+          type: string
+          examples:
+            - "4d3559ec67504aaba65d40b0363faad8"
+        iat:
+          type: number
+          examples:
+            - 1458496404
+        iss:
+          type: string
+          examples:
+            - "https://scim.example.com"
+        aud:
+          type: array
+          items:
+            type: string
+        sub_id:
+          type: object
+          $ref: '#/components/schemas/SubId'
+        events:
+          type: object
+          oneOf:
+            - $ref: '#/components/schemas/CreateEventsEnvelope'
+            - $ref: '#/components/schemas/PutEventsEnvelope'
+        # events:
+        #   type: object
+        #   $ref: '#/components/schemas/CreateEventsEnvelope'
+    SubId:
+      type: object
+      properties:
+        format:
+          type: string
+          enum:
+            - scim
+        uri:
+          type: string
+          examples:
+            - "/Users/44f6142df96bd6ab61e7521d9"
+        id:
+          type: string
+          examples:
+            - "44f6142df96bd6ab61e7521d9"
+
+    CreateEventsEnvelope:
+      type: object
+      properties:
+        "urn:ietf:params:SCIM:event:prov:create:full":
+          type: object
+          $ref: '#/components/schemas/CreateEvent'
+    CreateEvent:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/CreateEventData'
+    CreateEventData:
+      type: object
+      required:
+        - schemas
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          examples:
+            - ["urn:ietf:params:scim:schemas:core:2.0:User"]
+      additionalProperties:
+        type: string
+    # PatchEvents:
+    #   type: object
+    #   properties:
+    #     "urn:ietf:params:SCIM:event:prov:patch:full":
+    #       type: object
+    PutEventsEnvelope:
+      type: object
+      properties:
+        "urn:ietf:params:SCIM:event:prov:put:full":
+          type: object
+          $ref: '#/components/schemas/CreateEvent'
+    FilterResponse:
+      type: object
+      properties:
+        region:
+          type: string
+  requestBodies:
+    Event:
+      description: Event object that add the entry to the central database
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Event'
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header

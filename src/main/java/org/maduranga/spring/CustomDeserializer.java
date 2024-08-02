@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.maduranga.model.CreateEventsEnvelope;
+import org.maduranga.model.DeleteEventsEnvelope;
 import org.maduranga.model.EventEvents;
 import org.maduranga.model.PutEventsEnvelope;
 
@@ -21,6 +22,9 @@ public class CustomDeserializer extends JsonDeserializer<EventEvents> {
         } else if (node.has("urn:ietf:params:SCIM:event:prov:put:full")) {
             // Deserialize as PutEvent
             return jp.getCodec().treeToValue(node, PutEventsEnvelope.class);
+        } else if (node.has("urn:ietf:params:SCIM:event:prov:delete")) {
+            // Deserialize as DeleteEvent
+            return jp.getCodec().treeToValue(node, DeleteEventsEnvelope.class);
         }
         throw new IOException("Unknown event type");
     }

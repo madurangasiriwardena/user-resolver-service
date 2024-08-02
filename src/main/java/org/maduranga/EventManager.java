@@ -31,6 +31,7 @@ public class EventManager {
                 attributes.put(key, value);
             });
             user = new User(event.getSubId().getId(), event.getIss(), attributes);
+            userManagerDAO.addUser(user);
 
         } else if (events instanceof PutEventsEnvelope) {
             CreateEventsEnvelope createEventsEnvelope = (CreateEventsEnvelope) events;
@@ -39,12 +40,11 @@ public class EventManager {
                 attributes.put(key, value);
             });
             user = new User(event.getSubId().getId(), event.getIss(), attributes);
+            userManagerDAO.putUser(user);
+        } else if (events instanceof DeleteEventsEnvelope) {
+            userManagerDAO.deleteUser(event.getSubId().getId());
         } else {
             System.out.println("Unknown event type");
-            user = null;
-        }
-        if (user != null) {
-            userManagerDAO.addUser(user);
         }
     }
 }

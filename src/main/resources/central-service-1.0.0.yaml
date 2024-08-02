@@ -94,9 +94,7 @@ components:
           oneOf:
             - $ref: '#/components/schemas/CreateEventsEnvelope'
             - $ref: '#/components/schemas/PutEventsEnvelope'
-        # events:
-        #   type: object
-        #   $ref: '#/components/schemas/CreateEventsEnvelope'
+            - $ref: '#/components/schemas/DeleteEventsEnvelope'
     SubId:
       type: object
       properties:
@@ -149,6 +147,11 @@ components:
         "urn:ietf:params:SCIM:event:prov:put:full":
           type: object
           $ref: '#/components/schemas/CreateEvent'
+    DeleteEventsEnvelope:
+      type: object
+      properties:
+        "urn:ietf:params:SCIM:event:prov:delete":
+          type: object
     FilterResponse:
       type: object
       properties:

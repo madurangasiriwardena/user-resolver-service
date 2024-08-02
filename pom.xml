@@ -17,35 +17,35 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>7.1.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>
-                                ${project.basedir}/src/main/resources/central-service-1.0.0.yaml
-                            </inputSpec>
-                            <generatorName>spring</generatorName>
-                            <apiPackage>org.maduranga.api</apiPackage>
-                            <modelPackage>org.maduranga.model</modelPackage>
-                            <supportingFilesToGenerate>
-                                ApiUtil.java
-                            </supportingFilesToGenerate>
-                            <configOptions>
-                                <interfaceOnly>true</interfaceOnly>
-                                <sourceFolder>src/gen/java</sourceFolder>
-                            </configOptions>
-                            <output>.</output>
-                            <skipValidateSpec>true</skipValidateSpec>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.openapitools</groupId>-->
+<!--                <artifactId>openapi-generator-maven-plugin</artifactId>-->
+<!--                <version>7.1.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>generate</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <inputSpec>-->
+<!--                                ${project.basedir}/src/main/resources/central-service-1.0.0.yaml-->
+<!--                            </inputSpec>-->
+<!--                            <generatorName>spring</generatorName>-->
+<!--                            <apiPackage>org.maduranga.api</apiPackage>-->
+<!--                            <modelPackage>org.maduranga.model</modelPackage>-->
+<!--                            <supportingFilesToGenerate>-->
+<!--                                ApiUtil.java-->
+<!--                            </supportingFilesToGenerate>-->
+<!--                            <configOptions>-->
+<!--                                <interfaceOnly>true</interfaceOnly>-->
+<!--                                <sourceFolder>src/gen/java</sourceFolder>-->
+<!--                            </configOptions>-->
+<!--                            <output>.</output>-->
+<!--                            <skipValidateSpec>true</skipValidateSpec>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>

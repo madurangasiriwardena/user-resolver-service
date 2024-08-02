@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-24T20:50:36.192503+05:30[Asia/Colombo]")
 public class CreateEventData {
 
-  private JsonNullable<Object> schemas = JsonNullable.<Object>undefined();
+  private String[] schemas = null;
 
   public CreateEventData() {
     super();
@@ -34,12 +34,12 @@ public class CreateEventData {
   /**
    * Constructor with only required parameters
    */
-  public CreateEventData(Object schemas) {
-    this.schemas = JsonNullable.of(schemas);
+  public CreateEventData(String[] schemas) {
+    this.schemas = schemas;
   }
 
-  public CreateEventData schemas(Object schemas) {
-    this.schemas = JsonNullable.of(schemas);
+  public CreateEventData schemas(String[] schemas) {
+    this.schemas = schemas;
     return this;
   }
 
@@ -50,11 +50,11 @@ public class CreateEventData {
   @NotNull 
   @Schema(name = "schemas", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("schemas")
-  public JsonNullable<Object> getSchemas() {
+  public String[] getSchemas() {
     return schemas;
   }
 
-  public void setSchemas(JsonNullable<Object> schemas) {
+  public void setSchemas(String[] schemas) {
     this.schemas = schemas;
   }
     /**
